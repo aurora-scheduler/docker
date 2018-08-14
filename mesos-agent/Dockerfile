@@ -1,0 +1,42 @@
+FROM ubuntu:xenial
+#FROM mesosphere/mesos-slave:1.5.0
+
+# Install necessary dependencies for Aurora and Docker
+RUN apt-get update && apt-get -y install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common \
+    python2.7
+
+### Add Docker CE Repository
+
+# Get Docker signing key
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+# Add Docker as a repository
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+###  Add Mesosphere repo and install Mesos Agent
+
+RUN echo "deb http://repos.mesosphere.io/ubuntu/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/mesosphere.list && \
+  apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
+  apt-get -y update && \
+  apt-get -y install openjdk-8-jre-headless docker-ce mesos=1.5.0-2.0.1  && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
+
+### Install Aurora's default executor
+
+# Download Thermos deb file
+RUN curl -Lko /tmp/aurora-executor.deb "https://apache.bintray.com/aurora/ubuntu-xenial/aurora-executor_0.20.0_amd64.deb"
+
+# Install Thermos
+RUN dpkg -i /tmp/aurora-executor.deb
+
+# Add testing user, in this case vagrant for backwards compatibility
+RUN useradd vagrant
+
+ENTRYPOINT ["mesos-slave"]
