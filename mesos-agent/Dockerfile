@@ -1,5 +1,4 @@
 FROM ubuntu:xenial
-#FROM mesosphere/mesos-slave:1.5.0
 
 # Install necessary dependencies for Aurora and Docker
 RUN apt-get update && apt-get -y install \
@@ -25,13 +24,13 @@ RUN add-apt-repository \
 RUN echo "deb http://repos.mesosphere.io/ubuntu/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/mesosphere.list && \
   apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
   apt-get -y update && \
-  apt-get -y install openjdk-8-jre-headless docker-ce mesos=1.5.0-2.0.1  && \
+  apt-get -y install openjdk-8-jre-headless docker-ce mesos=1.1.3-2.0.1  && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ### Install Aurora's default executor
 
 # Download Thermos deb file
-RUN curl -Lko /tmp/aurora-executor.deb "https://apache.bintray.com/aurora/ubuntu-xenial/aurora-executor_0.20.0_amd64.deb"
+RUN curl -Lko /tmp/aurora-executor.deb "https://apache.bintray.com/aurora/ubuntu-xenial/aurora-executor_0.17.0_amd64.deb"
 
 # Install Thermos
 RUN dpkg -i /tmp/aurora-executor.deb
