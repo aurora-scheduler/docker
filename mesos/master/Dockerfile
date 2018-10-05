@@ -19,7 +19,7 @@ RUN add-apt-repository \
    $(lsb_release -cs) \
    stable"
 
-###  Add Mesosphere repo and install Mesos Agent
+###  Add Mesosphere repo and install Mesos Master
 
 RUN echo "deb http://repos.mesosphere.io/ubuntu/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/mesosphere.list && \
   apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
@@ -27,15 +27,4 @@ RUN echo "deb http://repos.mesosphere.io/ubuntu/ $(lsb_release -cs) main" > /etc
   apt-get -y install openjdk-8-jre-headless docker-ce mesos=1.5.1-2.0.2  && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
-### Install Aurora's default executor
-
-# Download Thermos deb file
-RUN curl -Lko /tmp/aurora-executor.deb "https://apache.bintray.com/aurora/ubuntu-xenial/aurora-executor_0.20.0_amd64.deb"
-
-# Install Thermos
-RUN dpkg -i /tmp/aurora-executor.deb
-
-# Add testing user, in this case vagrant for backwards compatibility
-RUN useradd vagrant
-
-ENTRYPOINT ["mesos-slave"]
+ENTRYPOINT ["mesos-master"]
