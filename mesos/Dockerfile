@@ -24,5 +24,5 @@ RUN add-apt-repository \
 RUN echo "deb http://repos.mesosphere.io/ubuntu/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/mesosphere.list && \
   apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF && \
   apt-get -y update && \
-  apt-get -y install openjdk-8-jre-headless docker-ce mesos=1.6.1-2.0.163  && \
+  apt-get -y install openjdk-8-jre-headless docker-ce mesos=1.4.2-2.0.1  && \
   apt-get clean && rm -rf /var/lib/apt/lists/*

@@ -1,9 +1,9 @@
-FROM rdelvalle/mesos:1.5.1
+FROM rdelvalle/mesos:1.4.2
 
 ### Install Aurora's default executor
 
 # Download Thermos deb file
-RUN curl -Lko /tmp/aurora-executor.deb "https://dl.bintray.com/rdelvalle/aurora/ubuntu-xenial/aurora-executor_0.21.0_amd64.deb"
+RUN curl -Lko /tmp/aurora-executor.deb "https://dl.bintray.com/rdelvalle/aurora/ubuntu-xenial/aurora-executor_0.20.0_amd64.deb"
 
 # Install Thermos
 RUN dpkg -i /tmp/aurora-executor.deb
