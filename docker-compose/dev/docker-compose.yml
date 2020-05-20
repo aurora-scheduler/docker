@@ -56,7 +56,7 @@ services:
       - zk
 
   aurora:
-    image: aurorascheduler/aurora-dev:latest
+    image: aurorascheduler/scheduler:dev
     pid: host
     ports:
     - "8081:8081"
