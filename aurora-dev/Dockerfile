@@ -18,7 +18,7 @@ RUN apt-get update && apt-get -y install \
   libffi-dev \
   python-all-dev \
   software-properties-common \
-  libkrb5-dev && apt-get -y install mesos=1.5.0-2.0.1
+  libkrb5-dev && apt-get -y install mesos=1.7.2-2.0.1
 
 RUN apt-get -y install openjdk-8-jdk \
   && update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
