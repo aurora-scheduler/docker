@@ -2,7 +2,7 @@ version: "2"
 
 services:
   zk:
-    image: rdelvalle/zookeeper
+    image: aurorascheduler/zookeeper
     restart: on-failure
     ports:
     - "2181:2181"
@@ -14,7 +14,7 @@ services:
         ipv4_address: 192.168.33.2
 
   master:
-    image: rdelvalle/mesos-master:1.6.2
+    image: aurorascheduler/mesos-master:1.7.2
     restart: on-failure
     ports:
     - "5050:5050"
@@ -32,7 +32,7 @@ services:
     - zk
 
   agent:
-    image: rdelvalle/mesos-agent:1.6.2
+    image: aurorascheduler/mesos-agent:1.7.2
     pid: host
     restart: on-failure
     ports:
@@ -56,7 +56,7 @@ services:
       - zk
 
   aurora:
-    image: rdelvalle/aurora-dev:latest
+    image: aurorascheduler/aurora-dev:latest
     pid: host
     ports:
     - "8081:8081"
